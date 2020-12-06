@@ -8,10 +8,6 @@ from pdfDataExtractor import extract_from_pdf
 
 
 def link_crawler():
-    keywords = ('index', 'director', 'vice', 'placement', 'chancellor', 'vc', 'contact', 'about',
-                'staff', "department", 'faculty', 'member')
-
-    #crawled_url = set()
 
     url = input("Enter url : ")
     info = tldextract.extract(url)
@@ -41,26 +37,24 @@ def link_crawler():
             lin = urls[count]
             print("Crawling : ", lin)
             if count > 0:
-                for i in keywords:
-                    if i in lin:
-                        response = create_conn(lin)  # request.get(
-                        soup = BeautifulSoup(response, 'html.parser')
-                        links = [a.attrs.get('href') for a in soup.select('a[href]')]
+                response = create_conn(lin)  # request.get(
+                soup = BeautifulSoup(response, 'html.parser')
+                links = [a.attrs.get('href') for a in soup.select('a[href]')]
 
-                        for link in links:
-                            if not link.startswith('http'):
-                                if link.startswith("?") and "?" not in lin:
-                                    link = lin + "/" + link
-                                else:
-                                    link = url.split('//')[0] + '//' + domain + "." + info.suffix + link
-                            if domain in link:
-                                if link in urls:
-                                    pass
-                                else:
-                                    urls.append(link)
+                for link in links:
+                    if not link.startswith('http'):
+                        if link.startswith("?") and "?" not in lin:
+                            link = lin + "/" + link
+                        else:
+                            link = url.split('//')[0] + '//' + domain + "." + info.suffix + link
+                    if domain in link:
+                        if link in urls:
+                            pass
+                        else:
+                            urls.append(link)
 
-                        email = email_extractor(lin)
-                        write_in_csv(email)
+                email = email_extractor(lin)
+                write_in_csv(email)
             else:
                 email = email_extractor(lin)
                 write_in_csv(email)
