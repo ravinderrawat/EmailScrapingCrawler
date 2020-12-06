@@ -36,7 +36,7 @@ def link_crawler():
         file.write("")
 
     count = 0
-    while count < len(urls) and count<200 :
+    while count < len(urls) and count<1000 :
         try:
             lin = urls[count]
             print("Crawling : ", lin)
