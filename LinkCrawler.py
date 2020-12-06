@@ -84,7 +84,3 @@ def link_crawler():
 
     driver.close()
 
-
-#link_crawler()
-
-# reading birla website completely
